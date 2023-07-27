@@ -65,6 +65,7 @@ int _printf(const char *format, ...)
         else
         {
 		_putchar(format[i]);
+		return(i);
         }
     }
     va_end(args);
