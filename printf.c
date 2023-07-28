@@ -1,7 +1,12 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <unistd.h>
-
+#include "main.h"
+/**
+ * _printf - prints numbers & new line at the end
+ * @format: string for  conversion specifiers
+ * Return: the number of characters printed or 0
+ */
 int _printf(const char *format, ...)
 {
     int count = 0;
@@ -60,9 +65,4 @@ int _printf(const char *format, ...)
     va_end(args);
 
     return count;
-}
-
-int _putchar(char c)
-{
-    return write(STDOUT_FILENO, &c, 1);
 }
