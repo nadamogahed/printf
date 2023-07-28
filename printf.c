@@ -34,6 +34,7 @@ int _printf(const char *format, ...)
 				string = va_arg(args, char*);
 				count = length(string);
 				print_string(string, count);
+				return (len);
 			}
 			else if (format[i] == 'd' || format[i] == 'i')
 			{
@@ -49,7 +50,7 @@ int _printf(const char *format, ...)
 			write(1, &format[i], 1);
 	}
 	va_end(args);
-	return (len);
+	return (0);
 }
 
 
