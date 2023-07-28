@@ -11,17 +11,14 @@
  */
 int _printf(const char *format, ...)
 {
-    int i, x, count, j;
+    int i, x, count;
     char ch;
-    char *string, *ptr;
+    char *string;
     int len = 0;
     va_list args;
     va_start(args, format);
 
-    while (format[len] != '\0')
-    {
-        len++;
-    }
+    len = length(format);
     if (format == NULL)
     {
         return -1;
@@ -41,33 +38,13 @@ int _printf(const char *format, ...)
             else if (format[i] == 's')
             {
                 string = va_arg(args, char*);
-                count = 0;
-                while (string[count] != '\0') {
-                    count++;
-                }
-                ptr = (char *) malloc((count + 1) * sizeof(char));
-                if (ptr == NULL) {
-                    return -1;
-                }
-                for (j = 0; j < count; j++) {
-                    ptr[j] = string[j];
-                }
-                ptr[count+1] = '\0';
-                write(STDOUT_FILENO, ptr, count);
-                free(ptr);
+                count = length(string);
+                print_string(string, count);
             }
             else if (format[i] == 'd' || format[i] == 'i')
             {
                 x = va_arg(args, int);
-                if (x < 0) {
-                    putchar('-');
-                    x = -x;
-                }
-                if (x / 10 > 0)
-                {
-                    _printf("%d", x / 10);
-                }
-                putchar(x % 10 + '0');
+                print_int_c (x);
             }    
             else if (format[i] == '%')
             {
@@ -90,4 +67,5 @@ int _printf(const char *format, ...)
     va_end(args);
     return(len);
 }
+
 
