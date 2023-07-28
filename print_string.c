@@ -26,5 +26,5 @@ int print_string(char *string, int count)
 	ptr[count] = '\0';
 	write(STDOUT_FILENO, ptr, count);
 	free(ptr);
-	return(j +1);
+	return(j);
 }
