@@ -14,7 +14,7 @@ int _printf(const char *format, ...)
     int i, x, count;
     char ch;
     char *string;
-    int len = 0;
+    int len = 0, len_str = 0;
     va_list args;
     va_start(args, format);
 
@@ -35,19 +35,19 @@ int _printf(const char *format, ...)
             if (format[i] == 'c')
             {
                 ch = va_arg(args, int);
-                _putchar(ch);
+                len_str += _putchar(ch);
             }
             else if (format[i] == 's')
             {
                 string = va_arg(args, char*);
                 if (string == NULL)
                 {
-                    write(STDOUT_FILENO, "(null)", 6);
+                    len_str += write(STDOUT_FILENO, "(null)", 6);
                 }
                 else 
                 {
                     count = length(string);
-                    print_string(string, count);
+                    len_str += print_string(string, count);
                 }
             }
             else if (format[i] == 'd' || format[i] == 'i')
@@ -70,5 +70,5 @@ int _printf(const char *format, ...)
         }
     }
     va_end(args);
-    return(len);
+    return(len_str);
 }
