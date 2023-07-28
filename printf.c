@@ -1,55 +1,68 @@
-#include <stdio.h>
-#include <string.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
-#include "main.h"
-/**
- * _printf - prints numbers & new line at the end
- * @format: string for  conversion specifiers
- * Return: the number of characters printed or 0
- */
+
 int _printf(const char *format, ...)
 {
-	int i, x, count, len;
-	char ch, *string;
-	va_list args;
+    int count = 0;
+    va_list args;
 
-	va_start(args, format);
-	len = length(format);
-	if (format == NULL)
-		return (-1);
-	for (i = 0; format[i] != '\0'; i++)
-	{
-		if (format[i] == '%')
-		{
-			i++;
-			if (format[i] == 'c')
-			{
-				ch = va_arg(args, int);
-				_putchar(ch);
-			}
-			else if (format[i] == 's')
-			{
-				string = va_arg(args, char*);
-				count = length(string);
-				print_string(string, count);
-			}
-			else if (format[i] == 'd' || format[i] == 'i')
-			{
-				x = va_arg(args, int);
-				print_int_c(x);
-			}
-			else
-				write(1, &format[i], 1);
-		}
-		else if (format[i] == '\\' && format[i + 1] == '\n')
-			_putchar(10);
-		else
-			write(1, &format[i], 1);
-	}
-	va_end(args);
-	return (len);
+    va_start(args, format);
+
+    while (*format)
+    {
+        if (*format == '%')
+        {
+            format++;
+            switch (*format)
+            {
+                case 'c':
+                    count += _putchar(va_arg(args, int));
+                    break;
+                case 's':
+                    count += write(STDOUT_FILENO, va_arg(args, char *), strlen(va_arg(args, char *)));
+                    break;
+                case 'd':
+                case 'i':
+                    {
+                        int value = va_arg(args, int);
+                        char buffer[12];
+                        int i = 0;
+                        if (value < 0) {
+                            count += _putchar('-');
+                            value = -value;
+                        }
+                        do {
+                            buffer[i++] = (value % 10) + '0';
+                            value /= 10;
+                        } while (value != 0);
+                        while (i-- > 0) {
+                            count += _putchar(buffer[i]);
+                        }
+                        break;
+                    }
+                case '%':
+                    count += _putchar('%');
+                    break;
+                default:
+                    count += _putchar('%');
+                    count += _putchar(*format);
+                    break;
+            }
+        }
+        else
+        {
+            count += _putchar(*format);
+        }
+        format++;
+    }
+
+    va_end(args);
+
+    return count;
 }
 
-
+int _putchar(char c)
+{
+    return write(STDOUT_FILENO, &c, 1);
+}
