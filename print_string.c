@@ -13,7 +13,7 @@
 int print_string(char *string, int count)
 {
 	char *ptr;
-	int j = 0;
+	int j = 0, i;
 
 	ptr = (char *) malloc((count + 1) * sizeof(char));
 	if (ptr == NULL)
@@ -24,7 +24,7 @@ int print_string(char *string, int count)
 		ptr[j] = string[j];
 	}
 	ptr[count] = '\0';
-	write(STDOUT_FILENO, ptr, count);
+	i = write(STDOUT_FILENO, ptr, count);
 	free(ptr);
-	return(j);
+	return (i);
 }
