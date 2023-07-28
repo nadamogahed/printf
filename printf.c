@@ -14,7 +14,7 @@ int _printf(const char *format, ...)
     int i, x, count;
     char ch;
     char *string;
-    int len_str = 0;
+    int len_str;
     va_list args;
     va_start(args, format);
 
