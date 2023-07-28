@@ -14,7 +14,7 @@ int _printf(const char *format, ...)
     int i, x, count;
     char ch;
     char *string;
-    int len = 0, len_str = 0;
+    int len_str = 0;
     va_list args;
     va_start(args, format);
 
@@ -24,7 +24,6 @@ int _printf(const char *format, ...)
         va_end(args);
         return (0);
     }
-    len = length(format);
     for (i = 0; format[i] != '\0'; i++)
     {
         
