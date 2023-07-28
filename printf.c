@@ -11,7 +11,7 @@
  */
 int _printf(const char *format, ...)
 {
-    int i, x;
+    int i, x, count, j;
     char ch;
     char *string, *ptr;
     int len = 0;
@@ -24,7 +24,7 @@ int _printf(const char *format, ...)
     }
     if (format == NULL)
     {
-        return -1; // or whatever error code is appropriate
+        return -1;
     }
     for (i = 0; format[i] != '\0'; i++)
     {
@@ -40,17 +40,16 @@ int _printf(const char *format, ...)
             }
             else if (format[i] == 's')
             {
-                char *string = va_arg(args, char*);
-                int count = 0;
+                string = va_arg(args, char*);
+                count = 0;
                 while (string[count] != '\0') {
                     count++;
                 }
-                char *ptr = (char *) malloc((count + 1) * sizeof(char));
+                ptr = (char *) malloc((count + 1) * sizeof(char));
                 if (ptr == NULL) {
-                    // Error handling code
                     return -1;
                 }
-                for (int j = 0; j < count; j++) {
+                for (j = 0; j < count; j++) {
                     ptr[j] = string[j];
                 }
                 ptr[count+1] = '\0';
