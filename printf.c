@@ -1,7 +1,8 @@
-#include <stdarg.h>
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
+#include <stdarg.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "main.h"
 /**
  * _printf - prints numbers & new line at the end
@@ -10,55 +11,64 @@
  */
 int _printf(const char *format, ...)
 {
-	int count = 0, i = 0, len, value;
-	char buffer[12];
-	va_list args;
+    int i, x, count;
+    char ch;
+    char *string;
+    int len = 0;
+    va_list args;
+    va_start(args, format);
 
-	va_start(args, format);
-	while (*format)
-	{
-		if (*format == '%')
-		{
-			format++;
-			switch (*format)
-			{
-				case 'c':
-					count += _putchar(va_arg(args, int));
-					break;
-				case 's':
-					len = strlen(va_arg(args, char *));
-					count += write(STDOUT_FILENO, va_arg(args, char *), len);
-					break;
-				case 'd':
-				case 'i':
-					{
-						value = va_arg(args, int);
-						if (value < 0)
-						{
-							count += _putchar('-');
-							value = -value;
-						}
-						do {
-							buffer[i++] = (value % 10) + '0';
-							value /= 10;
-						} while (value != 0);
-						while (i-- > 0)
-							count += _putchar(buffer[i]);
-						break;
-					}
-				case '%':
-					count += _putchar('%');
-					break;
-				default:
-					count += _putchar('%');
-					count += _putchar(*format);
-					break;
-			}
-		}
-		else
-			count += _putchar(*format);
-		format++;
-	}
-	va_end(args);
-	return (count);
+    
+    if (format == NULL)
+    {
+        va_end(args);
+        return (0);
+    }
+    len = length(format);
+    for (i = 0; format[i] != '\0'; i++)
+    {
+        
+        if (format[i] == '%')
+        {
+            
+            i++;
+            if (format[i] == 'c')
+            {
+                ch = va_arg(args, int);
+                _putchar(ch);
+            }
+            else if (format[i] == 's')
+            {
+                string = va_arg(args, char*);
+                if (string == NULL)
+                {
+                    write(STDOUT_FILENO, "(null)", 6);
+                }
+                else 
+                {
+                    count = length(string);
+                    print_string(string, count);
+                }
+            }
+            else if (format[i] == 'd' || format[i] == 'i')
+            {
+                x = va_arg(args, int);
+                print_int_c (x);
+            }
+            else
+            {
+                write(1, &format[i], 1);
+            }
+        }
+        else if (format[i] == '\\' && format[i+1] == '\n')
+        {
+            _putchar(10);
+        }
+        else
+        {
+		    write(1, &format[i], 1);
+        }
+    }
+    va_end(args);
+    return(len);
 }
