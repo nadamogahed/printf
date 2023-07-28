@@ -1,5 +1,5 @@
 #include <unistd.h>
-char _putchar(char c)
-{
-	return(c);
+
+int _putchar(char c) {
+    return write(STDOUT_FILENO, &c, 1);
 }

@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "main.h"
 /**
  * _printf - prints numbers & new line at the end
@@ -10,64 +11,72 @@
  */
 int _printf(const char *format, ...)
 {
-    int i, x, j;
-    char *string;
-
+    int i, x;
+    char ch;
+    char *string, *ptr;
+    int len = 0;
     va_list args;
     va_start(args, format);
 
+    while (format[len] != '\0')
+    {
+        len++;
+    }
     for (i = 0; format[i] != '\0'; i++)
     {
-/* if the next char in the placeholder string is a 'd', extract the next
- * argument as an int and print it out
- */
-        if (format[i] == '\0' )
+        if (format[i] == '%')
         {
-            continue;
-        }
-        else if (format[i] == '%' && (format[i + 1] == 's' || format[i + 1] == 'c'))
-        {
-                string = va_arg(args, char *);
-                for (j = 0; string[j] != '\0'; j++) {
-                    _putchar(string[j]);
-                }
-                i++;
-                return(i);
-        }
-/* if the next char in the placeholder string is a 'd' or 'i', extract the next
- * argument as an int and print it out
- */
-        else if (format[i] == '%' && (format[i + 1] == 'd' || format[i + 1] == 'i'))
-        {
-                x = va_arg(args, int);
-                    if (x < 0) {
-                        _putchar('-');
-                        x = -x;
-                    }
-                    if (x / 10 > 0)
-                    {
-                        _putchar(x / 10);
-                    }
-                    _putchar(x % 10 + '0');
-                    i++;
-                    continue;
-        }    
-        else if (format[i] == '%' && format[i + 1] == '%')
-        {
-            _putchar(format[i]);
+            
             i++;
-            continue;
+            if (format[i] == 'c')
+            {
+                ch = va_arg(args, int);
+                _putchar(ch);
+            }
+            else if (format[i] == 's')
+            {
+                string = va_arg(args, char*);
+                ptr = string;
+
+                    while (*ptr != '\0')
+                    {
+                        _putchar(*ptr);
+                        ptr++;
+                    }
+                
+            }
+            else if (format[i] == 'd' || format[i] == 'i')
+            {
+                    x = va_arg(args, int);
+                        if (x < 0) {
+                            _putchar('-');
+                            x = -x;
+                        }
+                        if (x / 10 > 0)
+                        {
+                            _putchar(x / 10);
+                        }
+                        _putchar(x % 10 + '0');
+                        i++;
+                        continue;
+            }    
+            else if (format[i] == '%')
+            {
+                _putchar(format[i]);
+                i++;
+                continue;
+            }
         }
-        else if (format[i] == '\n')
+        else if (format[i] == '\\' && format[i+1] == '\n')
         {
             _putchar(10);
         }
         else
         {
-		_putchar(format[i]);
-		return(i);
+		    write(1, &format[i], 1);
         }
     }
     va_end(args);
-    return(0);
+    return(len);
 }
+
