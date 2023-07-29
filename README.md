@@ -11,3 +11,6 @@ a header file iclude files and macros
 length.c:
 calculate the length
 
+_putchar.c:
+print a character
+
