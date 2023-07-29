@@ -1,10 +1,5 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdarg.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include "main.h"
-/*
+/**
  * print_int_c - prints an integer
  * @x: input integer
  * Return: void
