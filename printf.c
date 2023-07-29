@@ -11,7 +11,7 @@ int _printf(const char *format, ...)
 
 	va_start(args, format);
 	if (format == NULL)
-		return (write(STDOUT_FILENO, '\0', 6));
+		return (0);
 	for (i = 0; format[i] != '\0'; i++)
 	{
 		if (format[i] == '%')
