@@ -45,7 +45,7 @@ int _printf(const char *format, ...)
                 else 
                 {
                     len_str = length(string);
-                    print_string(string, count);
+                    print_string(string, len_str );
                 }
             }
             else if (format[i] == 'd' || format[i] == 'i')
