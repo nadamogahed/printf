@@ -12,8 +12,8 @@ int _printf(const char *format, ...)
 	va_start(args, format);
 	if (format == NULL)
 	{
-		va_end(args);
-		return (0);
+		len_str += write(1, '\0', 1);
+		return (len_str);
 	}
 	for (i = 0; i < length(format); i++)
 	{
