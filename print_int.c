@@ -7,6 +7,7 @@
 int print_int_c(int x)
 {
 	int i = 0;
+
 	if (x < 0)
 	{
 		i += _putchar('-');
@@ -17,5 +18,5 @@ int print_int_c(int x)
 		i += _printf("%d", x / 10);
 	}
 	i += _putchar(x % 10 + '0');
-	return(i);
+	return (i);
 }
