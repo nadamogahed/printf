@@ -33,14 +33,14 @@ int _printf(const char *format, ...)
             if (format[i] == 'c')
             {
                 ch = va_arg(args, int);
-                len_str = _putchar(ch);
+                _putchar(ch);
             }
             else if (format[i] == 's')
             {
                 string = va_arg(args, char*);
                 if (string == NULL)
                 {
-                    len_str = write(STDOUT_FILENO, "(null)", 6);
+                    write(STDOUT_FILENO, "(null)", 6);
                 }
                 else 
                 {
