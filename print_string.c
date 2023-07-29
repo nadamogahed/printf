@@ -10,21 +10,14 @@
  * @count: count the lenght
  * Return: void
  */
-int print_string(char *string, int count)
+int print_string(char *string)
 {
-	char *ptr;
-	int j = 0, i;
-
-	ptr = (char *) malloc((count + 1) * sizeof(char));
-	if (ptr == NULL)
-		return (0);
-
-	for (j = 0; j < count; j++)
+	if (string == NULL)
 	{
-		ptr[j] = string[j];
+		return(write(STDOUT_FILENO, "(null)", 6));
 	}
-	ptr[count] = '\0';
-	i = write(STDOUT_FILENO, ptr, count);
-	free(ptr);
-	return (i);
+	else
+	{
+		return(write(STDOUT_FILENO, string, length(string)));
+	}
 }
