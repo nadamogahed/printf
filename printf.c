@@ -11,7 +11,10 @@ int _printf(const char *format, ...)
 
 	va_start(args, format);
 	if (format == NULL)
+	{
+		va_end(args);
 		return (0);
+	}
 	for (i = 0; i < length(format); i++)
 	{
 		if (format[i] == '%')
@@ -26,7 +29,7 @@ int _printf(const char *format, ...)
 			else if (format[i] == 'd' || format[i] == 'i')
 				print_int_c(va_arg(args, int));
 			else if (format[i] == '\0')
-				len_str += write(1, &format[i], 1);
+				len_str += write(1, '\0', 1);
 			else
 			{
 				len_str += write(1, &format[i - 1], 1);
