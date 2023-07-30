@@ -16,3 +16,6 @@ print a character
 printf.c:
 implimentation of printf function
 
+task3:
+print unsigned int converted into binary.
+
